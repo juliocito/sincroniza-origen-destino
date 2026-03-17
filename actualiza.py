@@ -1,6 +1,9 @@
 from pathlib import Path
 import shutil
-
+#import argparse
+#import hashlib
+#import sys
+#D:\Descargas
 
 def mostrar_banner():
     print("=" * 50)
@@ -45,8 +48,6 @@ for archivo in origen_ruta.rglob("*"):
     if archivo.is_file():
         lista_archivos.append(archivo)
 
-
-
 cantidad_archivos = len(lista_archivos)
 
 
@@ -67,11 +68,10 @@ for archivo in lista_archivos:
 
     ruta_relativa = archivo.relative_to(origen_ruta)
     archivo_destino = destino_ruta / ruta_relativa
-    if archivo_destino.parent.exists():
-        if not archivo_destino.exists():
-            shutil.copy(archivo, archivo_destino)
-            faltantes.append(str(ruta_relativa))
-
+    archivo_destino.parent.mkdir(exist_ok=True, parents=True)
+    if not archivo_destino.exists():
+        shutil.copy(archivo, archivo_destino)
+        faltantes.append(str(ruta_relativa))
 print("\n\n")
 print(f"*"*50 + f" FALTANTES({len(faltantes)}) " + "*"*50)
 print("\n")
